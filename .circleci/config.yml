@@ -1,0 +1,70 @@
+version: 2
+
+# Reusable Block
+defaults: &defaults
+  docker:
+    - image: jcolemorrison/circleci-node-awscli:latest
+  working_directory: ~/project
+
+jobs:
+  # Install the project dependencies
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-modules-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install
+          command: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: node_modules-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  # Test the project
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Test
+          command: yarn test
+  # Deploy it
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      # necessary to hook into docker
+      - setup_remote_docker
+      - run:
+          name: Set ENV Variables
+          command: |
+            echo 'export IMAGE=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/awsdevops/api' >> $BASH_ENV
+      - run:
+          name: build image and deploy
+          command: |
+            chmod +x ./deploy.sh
+            ./deploy.sh
+
+workflows:
+  version: 2
+  test_install_deploy:
+    jobs:
+      - install
+      - test:
+          requires:
+            - install
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - staging
