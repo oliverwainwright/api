@@ -34,7 +34,7 @@ jobs:
           at: .
       - run:
           name: Test
-          command: yarn run
+          command: yarn test
   # Deploy it
   deploy:
     <<: *defaults
