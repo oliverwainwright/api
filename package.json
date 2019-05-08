@@ -9,7 +9,7 @@
     "lint": "eslint 'server/**/*.js'",
     "start": "nodemon .",
     "posttest": "yarn lint",
-    "test:unit": "NODE_ENV=test mocha --recursive",
+    "test": "NODE_ENV=test mocha --recursive",
     "test:unit:watch": "NODE_ENV=test mocha -w --recursive",
     "test:cover": "nyc -r text-summary npm run test:unit && nyc -r html report"
   },
