@@ -3,7 +3,7 @@
     "mountPath": "/explorer",
     "generateOperationScopedModels": true,
     "apiInfo": {
-        "title": "Updated API",
+        "title": "The API CI/CD for Staging and Production",
         "description": "the API is updated"
     }
   }

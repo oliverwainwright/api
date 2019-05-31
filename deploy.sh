@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # CHANGE THESE TO MATCH YOUR RESOURCE NAMES AND VALUES
-TASK_DEFINITION="awsdevops-api"
-SERVICE="api-service"
-CLUSTER="awsdevops-cluster"
+# TASK_DEFINITION="awsdevops-api"
+# SERVICE="api-service"
+# CLUSTER="awsdevops-cluster"
 
 # exit if the script fails
 set -e
