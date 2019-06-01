@@ -4,7 +4,7 @@
     "generateOperationScopedModels": true,
     "apiInfo": {
         "title": "The API CI/CD for Staging and Production",
-        "description": "the API is updated"
+        "description": "the API is updated..."
     }
   }
 }
